@@ -1,0 +1,39 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Todo App</a>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h3>Todo</h3>
+  <hr/>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row g-1">
+      <div class="col-sm-6">
+        <input type="text" class="form-control" formControlName="description">
+      </div>
+      <div class="col-sm-2">
+        <button type="submit" [disabled]="!form.get('description')?.valid" class="btn btn-primary">Add new</button>
+      </div>
+    </div>
+  </form>
+  <br>
+  <div class="row">
+    
+    <div class="col-sm-7">
+      <div *ngIf="todos.length == 0" class="alert alert-dark" role="alert">
+        Nenhuma tarefa encontrada!
+      </div>
+
+      <ul class="list-group">
+        <li *ngFor="let todo of todos" class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="{{ todo.done ? 'text-decoration-line-through':'' }}">{{todo.description}} {{ todo.doneDate }}</span>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button (click)="markAsDone(todo)" [disabled]="todo.done" type="button" class="btn btn-sm btn-success">Done</button>
+            <button (click)="delete(todo)" type="button" class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
